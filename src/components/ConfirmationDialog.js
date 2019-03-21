@@ -1,20 +1,25 @@
 import React from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Button } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Button, Typography } from '@material-ui/core';
 
 import I18n from '../config/I18n';
 
-const ConfirmationDialog = ({ confirmDialogOpen = false, onConfirmDialogClose, I18nKey, whatToDelete = '' }) => (
+const ConfirmationDialog = ({ open = false, onClose, onConfirm, I18nKey, whatToDelete = '' }) => (
     <Dialog 
-        open={confirmDialogOpen}
-        onClose={onConfirmDialogClose}
+        open={open}
+        onClose={onClose}
     >
-        <DialogTitle id="form-dialog-title">{I18n.t[I18nKey].delete.title}</DialogTitle>
+        <DialogTitle id="form-dialog-title">{I18n.t[I18nKey].listDialog.title}</DialogTitle>
         <DialogContent>
-            <DialogContentText>{I18n.t[I18nKey].delete.text} {whatToDelete}</DialogContentText>
+            <DialogContentText
+                gutterBottom
+                variant="subtitle2"
+                color="textPrimary"
+            >{I18n.t[I18nKey].listDialog.text}</DialogContentText>
+            <DialogContentText>{whatToDelete}</DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button onClick={onConfirmDialogClose}>{I18n.t[I18nKey].delete.cancel}</Button>
-            <Button color="secondary" variant="outlined">{I18n.t[I18nKey].delete.confirm}</Button>
+            <Button onClick={onClose}>{I18n.t[I18nKey].listDialog.cancel}</Button>
+            <Button color="secondary" variant="outlined" onClick={onConfirm}>{I18n.t[I18nKey].listDialog.confirm}</Button>
         </DialogActions>
     </Dialog>
 );

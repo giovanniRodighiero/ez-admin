@@ -19,6 +19,12 @@ axiosInstance.interceptors.request.use(config => {
 });
 
 axiosInstance.interceptors.response.use(response => response.data, error => {
+    console.log(error.response)
+
+    if (!error.response) {
+        console.log('connection error !');
+    }
+
     if (error.response.status === 401 && window.location.pathname != '/login') {
         window.localStorage.removeItem(auth.localStorageKey);
         window.location.href = '/login?notification=sessionExpired';
@@ -29,6 +35,8 @@ axiosInstance.interceptors.response.use(response => response.data, error => {
 
 // API
 axiosInstance.getUserProfile = _ => axiosInstance.get('/api/v1/users/me');
+axiosInstance.updateMyProfileInfos = body => axiosInstance.put('/api/v1/users/me/profile', body);
+axiosInstance.updateMyProfilePassword = body => axiosInstance.put('/api/v1/users/me/password', body);
 axiosInstance.login = body => axiosInstance.post('/api/v1/login', body);
 
 export default axiosInstance;

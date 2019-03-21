@@ -6,25 +6,37 @@ import NotificationContext from './components/NotificationContext';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 // import './App.css';
 
-import TopBar from './components/TopBar';
-import NavBar from './components/NavBar';
+// import TopBar from './components/TopBar';
+// import NavBar from './components/NavBar';
+import Navigation from './components/Navigation';
 import MainContentLayout from './components/MainContentLayout';
 import Notification from './components/Notification';
 
 import Login from './containers/Login';
 import DashboardPage from './containers/Dashboard';
 import UserListPage from './containers/UserList';
+import UserNewPage from './containers/UserNew';
+import ProfilePage from './containers/Profile';
+import SettingsPage from './containers/Settings';
 
 import { auth } from './config';
 
 
-const Dashboard = AuthenticatedRoute(() => <DashboardPage />);
-const UserList = AuthenticatedRoute(() => <UserListPage />);
-const Settings = AuthenticatedRoute(() => <Link to="/dashboard">dashboard</Link>);
+const Dashboard = AuthenticatedRoute(props => <DashboardPage { ...props } />);
+const UserList = AuthenticatedRoute(props => <UserListPage { ...props } />);
+const UserNew = AuthenticatedRoute(props => <UserNewPage { ...props } />);
+const Settings = AuthenticatedRoute(props => <SettingsPage { ...props } />);
+const Profile = AuthenticatedRoute(props => <ProfilePage { ...props } />)
 
 class App extends React.Component {
     state = {
-        user: false,
+        user: {
+            accountConfirmed: true,
+            email: "info@crispybacon.it",
+            role: 100,
+            _id: "555",
+            fetched: false
+        },
         notificationOpen: false,
         notificationMessage: '',
         notificationType: 'success',
@@ -65,18 +77,18 @@ class App extends React.Component {
                             <Route
                                 exact
                                 render={ ({ location }) => location.pathname != '/login'
-                                ? (<React.Fragment>
-                                        <TopBar email={this.state.user.email} />
-                                        <NavBar />
-                                    </React.Fragment>)
-                                : null }
+                                    ? <Navigation user={this.state.user} />
+                                    : null
+                                }
                             />
                             <MainContentLayout>
                                 <Switch>
                                     <Dashboard path="/" exact />
                                     <UserList path="/users" exact />
+                                    <UserNew path="/users/new" exact />
                                     <Settings path="/settings" exact />
                                     <Route path="/login" component={Login} />
+                                    <Profile path="/profile" exact />
                                     <Dashboard exact />
                                 </Switch>
                             </MainContentLayout>
@@ -99,8 +111,8 @@ class App extends React.Component {
     }
 
     setUser (user) {
-        console.log(user)
-        this.setState({ user });
+        console.log(user);
+        this.setState({ user: { ...user, fetched: true } });
     }
 
     hasAccessToken () {

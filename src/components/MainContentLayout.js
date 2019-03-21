@@ -1,18 +1,35 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Hidden, Grid } from '@material-ui/core';
 
 const styles = theme => ({
-    contents: {
+    contentsDesktop: {
         marginTop: theme.mixins.toolbar.minHeight + 10,
-        marginLeft: '200px',
+        marginLeft: '230px',
         padding: '15px'
-    }
+    },
+    contentsMobile: {
+        marginTop: theme.mixins.toolbar.minHeight + 10,
+        padding: '15px'
+    },
 });
 
 const MainContentLayout = ({ children, classes }) => (
-    <main className={classes.contents}>
-        {children}
-    </main>
+    <React.Fragment>
+        <Hidden smDown>
+            <main className={classes.contentsDesktop}>
+                <Grid container spacing={16}>
+                    {children}
+                </Grid>
+            </main>
+        </Hidden>
+        <Hidden mdUp>
+            <main className={classes.contentsMobile}>
+                <Grid container spacing={16}>
+                    {children}
+                </Grid>
+            </main>
+        </Hidden>
+    </React.Fragment>
 );
 
 export default withStyles(styles)(MainContentLayout);

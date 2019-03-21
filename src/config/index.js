@@ -1,7 +1,6 @@
 const apiUrls = {
     development: 'http://localhost:4000',
-    production: 'http://localhost:4000',
-    padella: 'http://localhost:4000',
+    production: 'http://localhost:4000'
 };
 
 export const api = {

@@ -15,6 +15,8 @@ function AuthenticatedRoute (Component) {
         async componentDidMount () {
             if (!this.context.hasAccessToken()) return;
 
+            if (this.context.user.fetched) return;
+
             try {
                 const result = await Api.getUserProfile();
                 this.context.setUser(result);
@@ -31,8 +33,8 @@ function AuthenticatedRoute (Component) {
             const { user } = this.context;
 
             if (error) return <Redirect to="/login" />;
-            if (!user) return <p>loading</p>;
-            if (user) return <Route {...this.props} component={Component} />;
+            if (!user.fetched) return <p>loading</p>;
+            if (user.fetched) return <Route {...this.props} component={Component} />;
         }
     }
 

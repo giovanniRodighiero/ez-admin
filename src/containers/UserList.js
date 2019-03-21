@@ -1,9 +1,13 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableHead, TableRow, TableFooter, TablePagination } from '@material-ui/core';
-import { IconButton, Button, withStyles } from '@material-ui/core';
-import { MdEdit, MdDelete } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import { Table, TableBody, TableHead, TableRow, TableFooter, TablePagination } from '@material-ui/core';
+import { IconButton, Grid, withStyles } from '@material-ui/core';
+import { MdEdit, MdDelete, MdAdd } from 'react-icons/md';
 
 import ConfirmationDialog from '../components/ConfirmationDialog';
+import FloatingButton from '../components/FloatingButton';
+import PageTitle from '../components/PageTitle';
+import { TableCell } from '../components/Table';
 
 import NotificationContext from '../components/NotificationContext';
 import Api from '../Api';
@@ -15,7 +19,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.primary.light,
         color: theme.palette.primary.contrastText
     }
-})
+});
 
 class UserList extends React.Component {
 
@@ -53,7 +57,13 @@ class UserList extends React.Component {
         this.setState({ confirmDialogOpen: true, userToDelete });
     }
 
-    onDeleteConfirm () {}
+    async onDeleteConfirm () {
+        try {
+            console.log(this.state.userToDelete);
+        } catch (error) {
+            
+        }
+    }
 
     render () {
         const { classes } = this.props;
@@ -61,51 +71,60 @@ class UserList extends React.Component {
         return (
             <React.Fragment>
                 <ConfirmationDialog
-                    confirmDialogOpen={this.state.confirmDialogOpen}
-                    onConfirmDialogClose={this.onConfirmDialogClose}
+                    open={this.state.confirmDialogOpen}
+                    onClose={this.onConfirmDialogClose}
+                    onConfirm={this.onDeleteConfirm}
                     I18nKey="users"
                     whatToDelete={this.state.userToDelete.email || ''}
                 />
-                <Button onClick={_ => this.context.setNotification({ notificationMessage: 'prova', notificationType: 'info' })}>notification</Button>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell className={classes.head}>Email</TableCell>
-                            <TableCell className={classes.head}>{I18n.t.users.role}</TableCell>
-                            <TableCell className={classes.head}>{I18n.t.users.accountStatus}</TableCell>
-                            <TableCell className={classes.head}>{I18n.t.users.actions}</TableCell>
-                        </TableRow>
-                    </TableHead>
+                
+                <PageTitle>{I18n.t.users.pageTitle}</PageTitle>
 
-                    <TableBody>
-                        { this.state.users.map(user => (
-                            <TableRow key={user._id}>
-                                <TableCell>{user.email}</TableCell>
-                                <TableCell>{I18n.t.users.roles[user.role]}</TableCell>
-                                <TableCell>{user.accountConfirmed ? I18n.t.users.accountConfirmed : I18n.t.users.accountNotConfirmed}</TableCell>
-                                <TableCell>
-                                    <IconButton href={`/users/${user._id}`}><MdEdit /></IconButton>
-                                    <IconButton onClick={_ => this.onConfirmDialogOpen(user)}><MdDelete /></IconButton>
-                                </TableCell>
+                <Grid item xs={12}>
+                    <Table padding="dense">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell className={classes.head}>Email</TableCell>
+                                <TableCell className={classes.head}>{I18n.t.users.role}</TableCell>
+                                <TableCell className={classes.head}>{I18n.t.users.accountStatus}</TableCell>
+                                <TableCell className={classes.head}>{I18n.t.users.actions}</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
+                        </TableHead>
 
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                labelRowsPerPage={I18n.t.tables.labelRowsPerPage}
-                                rowsPerPageOptions={[5, 10, 25]}
-                                colSpan={4}
-                                rowsPerPage={5}
-                                page={this.state.currentPage - 1}
-                                count={this.state.totalCount}
-                                onChangePage={_ => ({})}
-                                onChangeRowsPerPage={_ => {}}
-                            />                            
-                        </TableRow>
-                    </TableFooter>
-                </Table>
+                        <TableBody>
+                            { this.state.users.map(user => (
+                                <TableRow key={user._id}>
+                                    <TableCell>{user.email}</TableCell>
+                                    <TableCell>{I18n.t.users.roles[user.role]}</TableCell>
+                                    <TableCell>{user.accountConfirmed ? I18n.t.users.accountConfirmed : I18n.t.users.accountNotConfirmed}</TableCell>
+                                    <TableCell>
+                                        <IconButton href={`/users/${user._id}`}><MdEdit /></IconButton>
+                                        <IconButton onClick={_ => this.onConfirmDialogOpen(user)}><MdDelete /></IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+
+                        <TableFooter>
+                            <TableRow>
+                                <TablePagination
+                                    labelRowsPerPage={I18n.t.tables.labelRowsPerPage}
+                                    rowsPerPageOptions={[5, 10, 25]}
+                                    colSpan={4}
+                                    rowsPerPage={5}
+                                    page={this.state.currentPage - 1}
+                                    count={this.state.totalCount}
+                                    onChangePage={_ => ({})}
+                                    onChangeRowsPerPage={_ => {}}
+                                />                            
+                            </TableRow>
+                        </TableFooter>
+                    </Table>
+                </Grid>
+                                
+                <FloatingButton to="/users/new" component={Link}>
+                    <MdAdd size="28px" />
+                </FloatingButton>
             </React.Fragment>
         );
     }
