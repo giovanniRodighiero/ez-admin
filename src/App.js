@@ -1,8 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
-import UserContext from './components/UserContext';
-import NotificationContext from './components/NotificationContext';
+import GlobalContext from './components/GlobalContext';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 // import './App.css';
 
@@ -16,6 +15,7 @@ import Login from './containers/Login';
 import DashboardPage from './containers/Dashboard';
 import UserListPage from './containers/UserList';
 import UserNewPage from './containers/UserNew';
+import UserUpdatePage from './containers/UserUpdate';
 import ProfilePage from './containers/Profile';
 import SettingsPage from './containers/Settings';
 
@@ -25,6 +25,7 @@ import { auth } from './config';
 const Dashboard = AuthenticatedRoute(props => <DashboardPage { ...props } />);
 const UserList = AuthenticatedRoute(props => <UserListPage { ...props } />);
 const UserNew = AuthenticatedRoute(props => <UserNewPage { ...props } />);
+const UserUpdate = AuthenticatedRoute(props => <UserUpdatePage { ...props } />);
 const Settings = AuthenticatedRoute(props => <SettingsPage { ...props } />);
 const Profile = AuthenticatedRoute(props => <ProfilePage { ...props } />)
 
@@ -64,38 +65,37 @@ class App extends React.Component {
 
     render () {
         return (
-            <UserContext.Provider value={this.state}>
-                <NotificationContext.Provider value={this.state}>
-                    <Router>
-                        <React.Fragment>
-                            <Notification
-                                open={this.state.notificationOpen}
-                                dismissNotification={this.dismissNotification}
-                                message={<span id="message-id">{this.state.notificationMessage}</span>}
-                                type={this.state.notificationType}
-                            />
-                            <Route
-                                exact
-                                render={ ({ location }) => location.pathname != '/login'
-                                    ? <Navigation user={this.state.user} />
-                                    : null
-                                }
-                            />
-                            <MainContentLayout>
-                                <Switch>
-                                    <Dashboard path="/" exact />
-                                    <UserList path="/users" exact />
-                                    <UserNew path="/users/new" exact />
-                                    <Settings path="/settings" exact />
-                                    <Route path="/login" component={Login} />
-                                    <Profile path="/profile" exact />
-                                    <Dashboard exact />
-                                </Switch>
-                            </MainContentLayout>
-                        </React.Fragment>
-                    </Router>
-                </NotificationContext.Provider>
-            </UserContext.Provider>
+            <GlobalContext.Provider value={this.state}>
+                <Router>
+                    <React.Fragment>
+                        <Notification
+                            open={this.state.notificationOpen}
+                            dismissNotification={this.dismissNotification}
+                            message={<span id="message-id">{this.state.notificationMessage}</span>}
+                            type={this.state.notificationType}
+                        />
+                        <Route
+                            exact
+                            render={ ({ location }) => location.pathname != '/login'
+                                ? <Navigation user={this.state.user} />
+                                : null
+                            }
+                        />
+                        <MainContentLayout>
+                            <Switch>
+                                <Dashboard path="/" exact />
+                                <UserList path="/users" exact />
+                                <UserNew path="/users/new" exact />
+                                <UserUpdate path="/users/:id" exact />
+                                <Settings path="/settings" exact />
+                                <Route path="/login" component={Login} />
+                                <Profile path="/profile" exact />
+                                <Route path="*" render={props => <Redirect to="/" {...props} />} />
+                            </Switch>
+                        </MainContentLayout>
+                    </React.Fragment>
+                </Router>
+            </GlobalContext.Provider>
         );
     }
 

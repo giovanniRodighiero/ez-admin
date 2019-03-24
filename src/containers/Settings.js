@@ -2,43 +2,32 @@ import React from 'react';
 import { MdSave } from 'react-icons/md';
 
 import PageTitle from '../components/PageTitle';
-import SettingsMetaTags from '../components/SettingsMetaTags';
+import SettingsGeneric from '../components/SettingsGenerals';
 import FloatingButton from '../components/FloatingButton';
 
 import I18n from '../config/I18n';
 import Api from '../Api';
-import NotificationContext from '../components/NotificationContext';
+import GlobalContext from '../components/GlobalContext';
 
 const API_PATH = '/api/v1/settings';
 
 class Settings extends React.Component {
 
     state = {
-        meta: {
-            title: '',
-            description: '',
-
-            ogUrl: '',
-            ogTitle: '',
-            ogDescription: '',
-
-            twitterUrl: '',
-            twitterTitle: '',
-            twitterDescription: '',
-        }
+        defaultLang: ''
     }
 
     constructor (props) {
         super(props);
 
-        this.onMetaChange = this.onMetaChange.bind(this);
+        this.onSettingChange = this.onSettingChange.bind(this);
         this.onSave = this.onSave.bind(this);
     }
 
     async componentDidMount () {
         try {
             const settings = await Api.get(API_PATH);
-            this.setState({ meta: settings.meta });
+            this.setState(settings);
         } catch (error) {
             console.log(error);
             this.context.setNotification({
@@ -53,11 +42,10 @@ class Settings extends React.Component {
             <form style={{ width: '100%' }} onSubmit={this.onSave}>
                 <PageTitle>{I18n.t.settings.pageTitle}</PageTitle>
 
-                <SettingsMetaTags
-                    meta={this.state.meta}
-                    onMetaChange={this.onMetaChange}
+                <SettingsGeneric
+                    {...this.state}
+                    onSettingChange={this.onSettingChange}
                 />
-
                 <FloatingButton type="submit">
                     <MdSave size="28px" />
                 </FloatingButton>
@@ -65,17 +53,17 @@ class Settings extends React.Component {
         );
     }
 
-    onMetaChange (event) {
+    onSettingChange (event) {
         const { name, value } = event.target;
-        this.setState(prevState => ({ meta: { ...prevState.meta, [name]: value } }));
+        this.setState({ [name]: value });
     }
 
     async onSave (event) {
         event.preventDefault();
 
         try {
-            const newSettings = await Api.put(API_PATH, this.state);
-            this.setState({ meta: newSettings.meta });
+            const settings = await Api.put(API_PATH, this.state);
+            this.setState(settings);
             this.context.setNotification({
                 notificationType: 'success',
                 notificationMessage: I18n.t.settings.notification.success
@@ -90,6 +78,6 @@ class Settings extends React.Component {
     }
 };
 
-Settings.contextType = NotificationContext;
+Settings.contextType = GlobalContext;
 
 export default Settings;

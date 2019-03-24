@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import UserContext from '../components/UserContext';
-
 class Dashboard extends React.Component {
 
     render () {
@@ -14,7 +12,5 @@ class Dashboard extends React.Component {
         );
     }
 };
-
-Dashboard.contextType = UserContext;
 
 export default Dashboard;

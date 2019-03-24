@@ -31,11 +31,13 @@ export default {
         pageTitle: 'Gestione utenti',
         newUsersPageTitle: 'Creazione utente',
         newUsersPersonalInfos: 'Informazioni utente',
+        updateUsersPageTitle: 'Modifica utente',
         role: 'Ruolo',
         roles: {
             70: 'Utente',
             80: 'Editor',
-            90: 'Amministratore'
+            90: 'Amministratore',
+            100: 'Super Admin'
         },
         listDialog: {
             title: 'Conferma cancellazione utente',
@@ -51,8 +53,9 @@ export default {
             emailHelper: 'Verrà inviata una mail di conferma a questo indirizzo'
         },
         notification: {
-            success: 'Utente creato con successo !',
-            error: 'Errore durante la creazione dell\'utente'
+            success: 'Utente salvato con successo !',
+            error: 'Errore durante il salvataggio dell\'utente',
+            deleteSuccess: 'Utente eliminato con successo'
         },
         errors: {
             'already_existing': 'Indirizzo email già in uso'
@@ -72,6 +75,9 @@ export default {
         pageTitle: 'Impostazioni sito',
         metaTags: 'Meta tags',
         metaTagsSubtitle: 'Utilizzati come default per tutte le pagine in mancanza di specifici',
+        generic: 'Impostazioni generiche',
+        lang: 'Lingua',
+        langs: { it: 'Italiano', en: 'Inglese' },
         notification: {
             success: 'Impostazioni aggiornate con successo'
         }

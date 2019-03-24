@@ -6,7 +6,7 @@ import ProfileFormPassword from '../components/ProfileFormPassword';
 
 import I18n from '../config/I18n';
 import Api from '../Api';
-import UserContext from '../components/UserContext';
+import GlobalContext from '../components/GlobalContext';
 
 class Profile extends React.Component {
 
@@ -86,6 +86,6 @@ class Profile extends React.Component {
     }
 };
 
-Profile.contextType = UserContext;
+Profile.contextType = GlobalContext;
 
 export default Profile;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import UserContext from './UserContext';
+import GlobalContext from './GlobalContext';
 
 import Api from '../Api';
 
@@ -38,7 +38,7 @@ function AuthenticatedRoute (Component) {
         }
     }
 
-    WithUserProfile.contextType = UserContext;
+    WithUserProfile.contextType = GlobalContext;
 
     return WithUserProfile;
 }

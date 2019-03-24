@@ -27,10 +27,24 @@ class UserNew extends React.Component {
         this.onSave = this.onSave.bind(this);
     }
 
+    async componentDidMount () {
+        const { id } = this.props.match.params;
+        try {
+            const user = await Api.get(`${API_PATH}/${id}`);
+            this.setState(user);
+        } catch (error) {
+            console.log(error);
+            this.context.setNotification({
+                notificationType: 'error',
+                notificationMessage: I18n.t.generic.error
+            });
+        }
+    }
+
     render () {
         return (
             <React.Fragment>
-                <PageTitle backPath="/users">{I18n.t.users.newUsersPageTitle}</PageTitle>
+                <PageTitle backPath="/users">{I18n.t.users.updateUsersPageTitle}</PageTitle>
                 <UserForm
                     {...this.state}
                     title={I18n.t.users.newUsersPersonalInfos}
@@ -58,8 +72,9 @@ class UserNew extends React.Component {
     async onSave(event) {
         event.preventDefault();
 
+        const { id } = this.props.match.params;
         try {
-            await Api.post(API_PATH, this.state);
+            await Api.put(`${API_PATH}/${id}`, this.state);
             this.context.setNotification({
                 notificationType: 'success',
                 notificationMessage: I18n.t.users.notification.success

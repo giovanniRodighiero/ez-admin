@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { CardContent, CardActions } from '@material-ui/core';
 import { Typography, Button } from '@material-ui/core';
 
 import Card from '../components/LoginCard';
 import LoginCardBoxForm from '../components/LoginCardBoxForm';
 
-import UserContext from '../components/UserContext';
+import GlobalContext from '../components/GlobalContext';
 import I18n from '../config/I18n';
 import Api from '../Api';
 
@@ -107,6 +106,6 @@ class Login extends React.Component {
     }
 };
 
-Login.contextType = UserContext;
+Login.contextType = GlobalContext;
 
 export default Login;
