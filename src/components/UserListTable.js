@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Table, TableBody, TableHead, TableRow, TableFooter, TablePagination } from '@material-ui/core';
+import { Table, TableBody, TableHead, TableRow, TableFooter, TablePagination, TableSortLabel } from '@material-ui/core';
 import { IconButton, Grid } from '@material-ui/core';
 import { MdEdit, MdDelete } from 'react-icons/md';
 
@@ -18,16 +18,44 @@ export default ({
     perPage,
 
     onChangePage,
-    onChangeRowsPerPage
+    onChangeRowsPerPage,
+
+    sort,
+    sortDir,
+    onSortChange
 }) => (
     <Grid item xs={12}>
         <Table padding="dense">
             <TableHead>
                 <TableRow>
-                    <TableCell className={classes.head}>Email</TableCell>
-                    <TableCell className={classes.head}>{I18n.t.users.role}</TableCell>
-                    <TableCell className={classes.head}>{I18n.t.users.accountStatus}</TableCell>
-                    <TableCell className={classes.head}>{I18n.t.users.actions}</TableCell>
+                    <TableCell width="35%" className={classes.head}>
+                        <TableSortLabel
+                            active={sort === 'email'}
+                            direction={sortDir === -1 ? 'desc' : 'asc'}
+                            onClick={onSortChange('email')}
+                        >
+                            Email
+                        </TableSortLabel>
+                    </TableCell>
+                    <TableCell width="20%" className={classes.head}>
+                        <TableSortLabel
+                            active={sort === 'role'}
+                            direction={sortDir === -1 ? 'desc' : 'asc'}
+                            onClick={onSortChange('role')}
+                        >
+                            {I18n.t.users.role}
+                        </TableSortLabel>
+                    </TableCell>
+                    <TableCell width="25%" className={classes.head}>
+                        <TableSortLabel
+                            active={sort === 'accountConfirmed'}
+                            direction={sortDir === -1 ? 'desc' : 'asc'}
+                            onClick={onSortChange('accountConfirmed')}
+                        >
+                            {I18n.t.users.accountStatus}
+                        </TableSortLabel>
+                    </TableCell>
+                    <TableCell width="20%" className={classes.head}>{I18n.t.users.actions}</TableCell>
                 </TableRow>
             </TableHead>
 

@@ -7,8 +7,12 @@ const styles = theme => ({
     }
 })
 
-const TableCellComp = ({ classes, children, ...props }) => (
-    <DefaultTableCell classes={{ paddingDense: classes.tableCell }} {...props}>{ children }</DefaultTableCell>
+const TableCellComp = ({ classes, children, width, ...props }) => (
+    <DefaultTableCell
+        classes={{ paddingDense: classes.tableCell }}
+        style={{ width }}
+        {...props}
+    >{ children }</DefaultTableCell>
 );
 
 export const TableCell = withStyles(styles)(TableCellComp);

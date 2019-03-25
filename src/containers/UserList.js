@@ -29,7 +29,9 @@ class UserList extends React.Component {
         users: [],
         currentPage: 1,
         totalCount: 0,
-        perPage : 5
+        perPage : 5,
+        sort: 'email',
+        sortDir: -1
     }
 
     constructor (props) {
@@ -41,6 +43,7 @@ class UserList extends React.Component {
         this.onDeleteConfirm = this.onDeleteConfirm.bind(this);
         this.onChangePage = this.onChangePage.bind(this);
         this.onChangeRowsPerPage = this.onChangeRowsPerPage.bind(this);
+        this.onSortChange = this.onSortChange.bind(this);
     }
 
     componentDidMount () {
@@ -69,14 +72,12 @@ class UserList extends React.Component {
                 <PageTitle>{I18n.t.users.pageTitle}</PageTitle>
 
                 <UserListTable
-                    users={this.state.users}
+                    {...this.state}
                     classes={this.props.classes}
-                    currentPage={this.state.currentPage}
-                    totalCount={this.state.totalCount}
-                    perPage={this.state.perPage}
                     onConfirmDialogOpen={this.onConfirmDialogOpen}
                     onChangePage={this.onChangePage}
                     onChangeRowsPerPage={this.onChangeRowsPerPage}
+                    onSortChange={this.onSortChange}
                 />
                                 
                 <FloatingButton to="/users/new" component={Link}>
@@ -87,9 +88,10 @@ class UserList extends React.Component {
     }
 
     async fetchRecords () {
-        const { currentPage, perPage } = this.state;
+        const { currentPage, perPage, sort, sortDir } = this.state;
         try {
-            const { data: users, totalCount } = await Api.get(`${API_PATH}?page=${currentPage}&perPage=${perPage}`);
+            const path = `${API_PATH}?page=${currentPage}&perPage=${perPage}&sort=${sort}&sortDir=${sortDir}`;
+            const { data: users, totalCount } = await Api.get(path);
             this.setState({ users, totalCount });
         } catch (error) {
             console.log(error);
@@ -128,18 +130,40 @@ class UserList extends React.Component {
 
     onChangePage (e, currentPage) {
         this.setState({ currentPage: currentPage + 1 }, _ => {
-            const { perPage } = this.state;
-            this.props.history.push(`/users?page=${currentPage + 1}&perPage=${perPage}`);
+            const { perPage, sort, sortDir } = this.state;
+            const path = `/users?page=${currentPage + 1}&perPage=${perPage}&sort=${sort}&sortDir=${sortDir}`;
+            this.props.history.push(path);
             this.fetchRecords();
         });
     }
 
     onChangeRowsPerPage (e, item) {
         this.setState({ perPage: parseInt(item.key) }, _ => {
-            const { currentPage } = this.state;
-            this.props.history.push(`/users?page=${currentPage}&perPage=${parseInt(item.key)}`);
+            const { currentPage, sort, sortDir } = this.state;
+            const path = `/users?page=${currentPage}&perPage=${parseInt(item.key)}&sort=${sort}&sortDir=${sortDir}`;
+            this.props.history.push(path);
             this.fetchRecords();
         });
+    }
+
+    onSortChange (fieldName) {
+        return event => {
+            if (this.state.sort === fieldName) {
+                this.setState(prevState => ({ sortDir: prevState.sortDir === -1 ? 1 : -1 }), _ => {
+                    const { sort, sortDir, currentPage, perPage } = this.state;
+                    const path = `/users?page=${currentPage + 1}&perPage=${perPage}&sort=${sort}&sortDir=${sortDir === 1 ? -1 : 1 }`;
+                    this.props.history.push(path);
+                    this.fetchRecords();
+                });
+            } else {
+                this.setState({ sort: fieldName, sortDir: -1 }, _ => {
+                    const { sort, sortDir, currentPage, perPage } = this.state;
+                    const path = `/users?page=${currentPage + 1}&perPage=${perPage}&sort=${sort}&sortDir=${sortDir === 1 ? -1 : 1 }`;
+                    this.props.history.push(path);
+                    this.fetchRecords();
+                });
+            }
+        }
     }
 
 }
