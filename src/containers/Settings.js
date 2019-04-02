@@ -2,7 +2,7 @@ import React from 'react';
 import { MdSave } from 'react-icons/md';
 
 import PageTitle from '../components/PageTitle';
-import SettingsGeneric from '../components/SettingsGenerals';
+import SettingsMetaTags from '../components/SettingsMetaTags';
 import FloatingButton from '../components/FloatingButton';
 
 import I18n from '../config/I18n';
@@ -14,20 +14,31 @@ const API_PATH = '/api/v1/settings';
 class Settings extends React.Component {
 
     state = {
-        defaultLang: ''
+        meta: {
+            title: '',
+            description: '',
+
+            ogUrl: '',
+            ogTitle: '',
+            ogDescription: '',
+
+            twitterUrl: '',
+            twitterTitle: '',
+            twitterDescription: '',
+        }
     }
 
     constructor (props) {
         super(props);
 
-        this.onSettingChange = this.onSettingChange.bind(this);
+        this.onMetaChange = this.onMetaChange.bind(this);
         this.onSave = this.onSave.bind(this);
     }
 
     async componentDidMount () {
         try {
             const settings = await Api.get(API_PATH);
-            this.setState(settings);
+            this.setState({ meta: settings.meta });
         } catch (error) {
             console.log(error);
             this.context.setNotification({
@@ -42,10 +53,11 @@ class Settings extends React.Component {
             <form style={{ width: '100%' }} onSubmit={this.onSave}>
                 <PageTitle>{I18n.t.settings.pageTitle}</PageTitle>
 
-                <SettingsGeneric
-                    {...this.state}
-                    onSettingChange={this.onSettingChange}
+                <SettingsMetaTags
+                    meta={this.state.meta}
+                    onMetaChange={this.onMetaChange}
                 />
+
                 <FloatingButton type="submit">
                     <MdSave size="28px" />
                 </FloatingButton>
@@ -53,17 +65,17 @@ class Settings extends React.Component {
         );
     }
 
-    onSettingChange (event) {
+    onMetaChange (event) {
         const { name, value } = event.target;
-        this.setState({ [name]: value });
+        this.setState(prevState => ({ meta: { ...prevState.meta, [name]: value } }));
     }
 
     async onSave (event) {
         event.preventDefault();
 
         try {
-            const settings = await Api.put(API_PATH, this.state);
-            this.setState(settings);
+            const newSettings = await Api.put(API_PATH, this.state);
+            this.setState({ meta: newSettings.meta });
             this.context.setNotification({
                 notificationType: 'success',
                 notificationMessage: I18n.t.settings.notification.success
