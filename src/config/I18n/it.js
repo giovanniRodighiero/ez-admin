@@ -1,6 +1,7 @@
 export default {
     generic: {
         error: 'Si è verificato un errore',
+        upload: 'Seleziona nuova immagine'
     },
 
     topBar: {
@@ -76,6 +77,7 @@ export default {
         metaTags: 'Meta tags',
         metaTagsSubtitle: 'Utilizzati come default per tutte le pagine in mancanza di specifici',
         generic: 'Impostazioni generiche',
+        image: 'Immagine di anteprima',
         lang: 'Lingua',
         langs: { it: 'Italiano', en: 'Inglese' },
         notification: {

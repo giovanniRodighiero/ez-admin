@@ -3,7 +3,7 @@ import { Button, Grid } from '@material-ui/core';
 
 import GroupSection from './GroupSection';
 import GroupSectionButtons from './GroupSectionButtons';
-import InputField from './InputField';
+import FieldInput from './FieldInput';
 
 import I18n from '../config/I18n';
 
@@ -17,7 +17,7 @@ export default ({
         <form onSubmit={onProfileSave}>
             <Grid container spacing={16}>
                 <Grid item sm={6}>
-                    <InputField
+                    <FieldInput
                         required
                         id="email"
                         label="Email"

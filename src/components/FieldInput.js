@@ -5,6 +5,6 @@ const styles = theme => ({
 
 });
 
-const InputField = props => <TextField {...props}  fullWidth />;
+const FieldInput = props => <TextField {...props}  fullWidth />;
 
-export default withStyles(styles)(InputField);
+export default withStyles(styles)(FieldInput);

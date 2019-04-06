@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 
 import GroupSection from './GroupSection';
-import InputField from './InputField';
+import FieldInput from './FieldInput';
 
 import I18n from '../config/I18n';
 
@@ -15,7 +15,7 @@ export default ({
     >
         <Grid container spacing={16}>
             <Grid item md={6} sm={12}>
-                <InputField
+                <FieldInput
                     select
                     required
                     id="lang"
@@ -31,7 +31,7 @@ export default ({
                         ['it', 'en'].map(lang =>
                             <option value={lang} key={lang}>{I18n.t.settings.langs[lang]}</option>)
                     }
-                </InputField>
+                </FieldInput>
             </Grid>
         </Grid>
     </GroupSection>

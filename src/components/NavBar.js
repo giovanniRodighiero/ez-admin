@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Hidden, ListSubheader } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { MdPeople, MdSettings } from 'react-icons/md';
@@ -17,7 +17,7 @@ const styles = theme => ({
     }
 })
 
-const renderLink = ({ to, ...itemProps}) => <Link to={to} {...itemProps} />;
+const renderLink = ({ to, ...itemProps}) => <NavLink to={to} {...itemProps} />;
 
 const LinkTitle = ({ classes, text }) => <ListSubheader component="div" className={classes.subheader}>{text}</ListSubheader>
 

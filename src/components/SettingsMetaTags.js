@@ -1,22 +1,34 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, FormLabel } from '@material-ui/core';
 
 import GroupSection from './GroupSection';
-import InputField from './InputField';
+import FieldInput from './FieldInput';
+import FieldUpload from './FieldUpload';
 
 import I18n from '../config/I18n';
 
-export default ({
+const SettingsMetaTags = ({
     meta = {},
-    onMetaChange
+    onMetaChange,
+    onImageUploaded
 }) => (
-    <GroupSection
-        title={I18n.t.settings.metaTags}
-        subtitle={I18n.t.settings.metaTagsSubtitle}
-    >
-            <Grid container spacing={16}>
+        <GroupSection
+            title={I18n.t.settings.metaTags}
+            subtitle={I18n.t.settings.metaTagsSubtitle}
+        >
+            <Grid container spacing={16} alignItems="center">
+                <Grid item md={3}>
+                    <FormLabel>{I18n.t.settings.image}</FormLabel>
+                </Grid>
+                <Grid item md={9}>
+                    <FieldUpload
+                        image={meta.image}
+                        onImageUploaded={onImageUploaded}
+                    />
+                </Grid>
+
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         required
                         id="title"
                         label="Meta Title"
@@ -28,7 +40,7 @@ export default ({
                     />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         required
                         multiline
                         id="description"
@@ -45,7 +57,7 @@ export default ({
 
             <Grid container spacing={16}>
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         required
                         id="ogUrl"
                         label="Open graph url"
@@ -57,7 +69,7 @@ export default ({
                     />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         required
                         id="twitterUrl"
                         label="Twitter url"
@@ -72,7 +84,7 @@ export default ({
 
             <Grid container spacing={16}>
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         required
                         id="ogTitle"
                         label="Open graph title"
@@ -84,7 +96,7 @@ export default ({
                     />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         required
                         id="twitterTitle"
                         label="Twitter title"
@@ -96,10 +108,10 @@ export default ({
                     />
                 </Grid>
             </Grid>
-            
+
             <Grid container spacing={16}>
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         required
                         id="ogDescription"
                         label="Open graph description"
@@ -111,7 +123,7 @@ export default ({
                     />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         required
                         id="twitterDescription"
                         label="Twitter description"
@@ -123,5 +135,7 @@ export default ({
                     />
                 </Grid>
             </Grid>
-    </GroupSection>
-);
+        </GroupSection>
+    );
+
+export default SettingsMetaTags;

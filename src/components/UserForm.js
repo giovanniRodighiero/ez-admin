@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { MdSave } from 'react-icons/md';
 
 import GroupSection from './GroupSection';
-import InputField from './InputField';
+import FieldInput from './FieldInput';
 import FloatingButton from './FloatingButton';
 
 import I18n from '../config/I18n';
@@ -21,7 +21,7 @@ export default ({
         <form onSubmit={onSave}>
             <Grid container spacing={16}>
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         required
                         id="email"
                         label="Email"
@@ -35,7 +35,7 @@ export default ({
                     />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                    <InputField
+                    <FieldInput
                         select
                         required
                         id="role"
@@ -50,7 +50,7 @@ export default ({
                             availableRoles.map(role =>
                                 <option value={role} key={role}>{I18n.t.users.roles[role]}</option>)
                         }
-                    </InputField>
+                    </FieldInput>
                 </Grid>
             </Grid>
 

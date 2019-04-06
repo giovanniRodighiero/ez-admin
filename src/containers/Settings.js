@@ -10,11 +10,13 @@ import Api from '../Api';
 import GlobalContext from '../components/GlobalContext';
 
 const API_PATH = '/api/v1/settings';
+const UPLOAD_PATH = '/api/v1/uploader';
 
 class Settings extends React.Component {
 
     state = {
         meta: {
+            image: '',
             title: '',
             description: '',
 
@@ -32,6 +34,7 @@ class Settings extends React.Component {
         super(props);
 
         this.onMetaChange = this.onMetaChange.bind(this);
+        this.onImageUploaded = this.onImageUploaded.bind(this);
         this.onSave = this.onSave.bind(this);
     }
 
@@ -56,6 +59,7 @@ class Settings extends React.Component {
                 <SettingsMetaTags
                     meta={this.state.meta}
                     onMetaChange={this.onMetaChange}
+                    onImageUploaded={this.onImageUploaded}
                 />
 
                 <FloatingButton type="submit">
@@ -68,6 +72,10 @@ class Settings extends React.Component {
     onMetaChange (event) {
         const { name, value } = event.target;
         this.setState(prevState => ({ meta: { ...prevState.meta, [name]: value } }));
+    }
+
+    async onImageUploaded (image) {
+        this.setState(prevState => ({ meta: { ...prevState.meta, image } }));
     }
 
     async onSave (event) {
