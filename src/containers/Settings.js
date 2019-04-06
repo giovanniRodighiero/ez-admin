@@ -74,8 +74,8 @@ class Settings extends React.Component {
         this.setState(prevState => ({ meta: { ...prevState.meta, [name]: value } }));
     }
 
-    async onImageUploaded (image) {
-        this.setState(prevState => ({ meta: { ...prevState.meta, image } }));
+    onImageUploaded (image, done) {
+        this.setState(prevState => ({ meta: { ...prevState.meta, image } }), done);
     }
 
     async onSave (event) {

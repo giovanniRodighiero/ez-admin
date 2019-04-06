@@ -5,7 +5,8 @@ const styles = theme => ({
     contentsDesktop: {
         marginTop: theme.mixins.toolbar.minHeight + 10,
         marginLeft: '230px',
-        padding: '15px'
+        padding: '15px',
+        marginBottom: '70px'
     },
     contentsMobile: {
         marginTop: theme.mixins.toolbar.minHeight + 10,
