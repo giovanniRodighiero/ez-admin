@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Hidden, ListSubheader } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { MdPeople, MdSettings } from 'react-icons/md';
+import { MdPeople, MdSettings, MdHome } from 'react-icons/md';
 
 import I18n from '../config/I18n';
 
@@ -33,7 +33,10 @@ const Component = ({ classes, open, onClose, variant }) => (
             component="nav"
             subheader={<LinkTitle classes={classes} text={I18n.t.navBar.pages} />}
         >
-
+            <ListItem button component={renderLink} to="/pages/homepage" onClick={onClose}>
+                <ListItemIcon><MdHome size="1.5em" /></ListItemIcon>
+                <ListItemText>{I18n.t.navBar.pagesHomepage}</ListItemText>
+            </ListItem>
         </List>
 
         <List

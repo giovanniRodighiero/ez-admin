@@ -8,13 +8,27 @@ import FieldUpload from './FieldUpload';
 import I18n from '../config/I18n';
 
 const SettingsMetaTags = ({
-    meta = {},
+    meta = {
+        image: '',
+        title: '',
+        description: '',
+
+        ogUrl: '',
+        ogTitle: '',
+        ogDescription: '',
+
+        twitterUrl: '',
+        twitterTitle: '',
+        twitterDescription: '',
+    },
     onMetaChange,
-    onImageUploaded
+    onImageUploaded,
+    cardTitle = I18n.t.settings.metaTags,
+    cardSubtitle = I18n.t.settings.metaTagsSubtitle
 }) => (
         <GroupSection
-            title={I18n.t.settings.metaTags}
-            subtitle={I18n.t.settings.metaTagsSubtitle}
+            title={cardTitle}
+            subtitle={cardSubtitle}
         >
             <Grid container spacing={16} alignItems="center">
                 <Grid item md={3}>
@@ -22,6 +36,7 @@ const SettingsMetaTags = ({
                 </Grid>
                 <Grid item md={9}>
                     <FieldUpload
+                        name="metaImage"
                         image={meta.image}
                         onImageUploaded={onImageUploaded}
                     />

@@ -52,17 +52,17 @@ class FieldUpload extends React.Component {
     }
 
     render () {
-        const { classes, image } = this.props;
+        const { classes, image, name } = this.props;
 
         return (
-            <FormLabel htmlFor="raised-button-file" className={classes.imageContainer}>
+            <FormLabel htmlFor={`fileupload-${name}`} className={classes.imageContainer}>
                 { this.state.loading && <MdFileUpload size="30px" /> }
                 { !this.state.loading && (
                     <React.Fragment>
                         <input
                             accept="image/*"
                             style={{ display: 'none' }}
-                            id="raised-button-file"
+                            id={`fileupload-${name}`}
                             multiple
                             onChange={this.onFileSelected}
                             type="file"
@@ -79,7 +79,8 @@ class FieldUpload extends React.Component {
     }
 
     async onFileSelected (event) {
-        this.setState({ loading: true });
+        console.log('ok')
+        this.setState({ loading: true }, _ => console.log('done'));
         const formData = new FormData();
         formData.append("image", event.target.files[0]);
         const { url } = await Api.post(UPLOAD_PATH, formData, {

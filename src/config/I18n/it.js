@@ -1,7 +1,8 @@
 export default {
     generic: {
         error: 'Si è verificato un errore',
-        upload: 'Seleziona nuova immagine'
+        upload: 'Seleziona nuova immagine',
+        savedSuccessfully: 'Salvato correttamente'
     },
 
     topBar: {
@@ -12,7 +13,8 @@ export default {
         pages: 'Pagine e contenuti',
         admin: 'Amministrazione',
         users: 'Utenti',
-        settings: 'Impostazioni sito'
+        settings: 'Impostazioni sito',
+        pagesHomepage: 'Homepage'
     },
 
     tables: {
@@ -73,7 +75,7 @@ export default {
     },
 
     settings: {
-        pageTitle: 'Impostazioni sito',
+        pageTitle: 'Gestione impostazioni sito',
         metaTags: 'Meta tags',
         metaTagsSubtitle: 'Utilizzati come default per tutte le pagine in mancanza di specifici',
         generic: 'Impostazioni generiche',
@@ -82,6 +84,23 @@ export default {
         langs: { it: 'Italiano', en: 'Inglese' },
         notification: {
             success: 'Impostazioni aggiornate con successo'
+        }
+    },
+
+    homepage: {
+        pageTitle: 'Modifica homepage del sito',
+        metaTagsDescription: 'Informazioni per SEO e social',
+        hero: {
+            imageDesktop: 'Immagine di copertina (Desktop)',
+            imageMobile: 'Immagine di copertina (Mobile)',
+            cardTitle: 'Testata della pagina',
+            cardSubtitle: 'Informazioni riguardanti l\'immagine di copertina, titolo seo e abstract del sito',
+            title: 'Titolo SEO (H1)',
+            subtitle: 'Sottotitolo SEO (H2)',
+            description: 'Abstract / descrizione'
+        },
+        notification: {
+            success: 'Homepage aggiornata con successo'
         }
     }
 }

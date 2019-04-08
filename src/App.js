@@ -18,6 +18,7 @@ import UserNewPage from './containers/UserNew';
 import UserUpdatePage from './containers/UserUpdate';
 import ProfilePage from './containers/Profile';
 import SettingsPage from './containers/Settings';
+import PagesHomepage from './containers/PagesHomepage';
 
 import { auth } from './config';
 
@@ -27,7 +28,8 @@ const UserList = AuthenticatedRoute(props => <UserListPage { ...props } />);
 const UserNew = AuthenticatedRoute(props => <UserNewPage { ...props } />);
 const UserUpdate = AuthenticatedRoute(props => <UserUpdatePage { ...props } />);
 const Settings = AuthenticatedRoute(props => <SettingsPage { ...props } />);
-const Profile = AuthenticatedRoute(props => <ProfilePage { ...props } />)
+const Profile = AuthenticatedRoute(props => <ProfilePage { ...props } />);
+const Homepage = AuthenticatedRoute(props => <PagesHomepage { ...props } />)
 
 class App extends React.Component {
     state = {
@@ -90,6 +92,7 @@ class App extends React.Component {
                                 <Settings path="/settings" exact />
                                 <Route path="/login" component={Login} />
                                 <Profile path="/profile" exact />
+                                <Homepage path="/pages/homepage" exact />
                                 <Route path="*" render={props => <Redirect to="/" {...props} />} />
                             </Switch>
                         </MainContentLayout>
