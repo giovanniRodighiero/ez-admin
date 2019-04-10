@@ -10,7 +10,6 @@ import Api from '../Api';
 import GlobalContext from '../components/GlobalContext';
 
 const API_PATH = '/api/v1/settings';
-const UPLOAD_PATH = '/api/v1/uploader';
 
 class Settings extends React.Component {
 

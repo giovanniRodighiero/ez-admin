@@ -2,8 +2,6 @@ import React from 'react';
 import { Grid, Button, withStyles, IconButton } from '@material-ui/core';
 import { MdAdd, MdDelete } from 'react-icons/md';
 
-import FieldInput from './FieldInput';
-
 const styles = theme => ({
     buttonsContainer: {
         marginTop: '16px'

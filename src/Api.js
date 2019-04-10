@@ -25,7 +25,7 @@ axiosInstance.interceptors.response.use(response => response.data, error => {
         console.log('connection error !');
     }
 
-    if (error.response.status === 401 && window.location.pathname != '/login') {
+    if (error.response.status === 401 && window.location.pathname !== '/login') {
         window.localStorage.removeItem(auth.localStorageKey);
         window.location.href = '/login?notification=sessionExpired';
     }

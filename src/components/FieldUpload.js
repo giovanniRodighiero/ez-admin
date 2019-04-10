@@ -74,6 +74,7 @@ class FieldUpload extends React.Component {
                         <img
                             src={image || '/placeholder-img.png'}
                             className={classes.image}
+                            alt={id}
                         />
                     </React.Fragment>
                 )}

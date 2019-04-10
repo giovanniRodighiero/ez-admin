@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Button, Typography } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Button } from '@material-ui/core';
 
 import I18n from '../config/I18n';
 

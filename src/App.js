@@ -78,7 +78,7 @@ class App extends React.Component {
                         />
                         <Route
                             exact
-                            render={ ({ location }) => location.pathname != '/login'
+                            render={ ({ location }) => location.pathname !== '/login'
                                 ? <Navigation user={this.state.user} />
                                 : null
                             }
