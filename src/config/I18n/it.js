@@ -99,6 +99,14 @@ export default {
             subtitle: 'Sottotitolo SEO (H2)',
             description: 'Abstract / descrizione'
         },
+        services: {
+            cardTitle: 'Sezione servizi',
+            cardSubtitle: 'Informazioni riguardati la sezione servizi',
+            title: 'Titolo della sezione',
+            itemsTitle: 'Nome del servizio',
+            itemsDescription: 'Descrizione del servizio',
+            itemsImage: 'Immagine del servizio'
+        },
         notification: {
             success: 'Homepage aggiornata con successo'
         }

@@ -10,7 +10,8 @@ const styles = theme => ({
         marginBottom: '20px'
     },
     cardHeader: {
-        cursor: 'pointer'
+        cursor: 'pointer',
+        padding: '8px 12px'
     },
     cardContent: {
         padding: '0 !important',

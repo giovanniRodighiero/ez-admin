@@ -26,7 +26,7 @@ export default ({
                 <FieldUpload
                     name="heroImageDesktop"
                     image={hero.imageDesktop}
-                    onImageUploaded={onImageUploaded('hero', 'imageDesktop')}
+                    onImageUploaded={onImageUploaded({ prefix: 'hero', fieldName: 'imageDesktop' })}
                 />
             </Grid>
 
@@ -37,7 +37,7 @@ export default ({
                 <FieldUpload
                     name="heroImageDesktop"
                     image={hero.imageMobile}
-                    onImageUploaded={onImageUploaded('hero', 'imageMobile')}
+                    onImageUploaded={onImageUploaded({ prefix: 'hero', fieldName: 'imageMobile' })}
                 />
             </Grid>
 

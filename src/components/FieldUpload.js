@@ -42,7 +42,8 @@ const styles = {
 class FieldUpload extends React.Component {
 
     state = {
-        loading: false
+        loading: false,
+        fileuploaded: false
     }
 
     constructor (props) {
@@ -52,20 +53,22 @@ class FieldUpload extends React.Component {
     }
 
     render () {
-        const { classes, image, name } = this.props;
+        const { classes, image, id, index = 0, required = false } = this.props;
 
         return (
-            <FormLabel htmlFor={`fileupload-${name}`} className={classes.imageContainer}>
+            <FormLabel htmlFor={`fileupload-${id}-${index}`} className={classes.imageContainer}>
                 { this.state.loading && <MdFileUpload size="30px" /> }
                 { !this.state.loading && (
                     <React.Fragment>
                         <input
                             accept="image/*"
-                            style={{ display: 'none' }}
-                            id={`fileupload-${name}`}
-                            multiple
+                            style={{ opacity: '0' }}
+                            id={`fileupload-${id}-${index}`}
                             onChange={this.onFileSelected}
                             type="file"
+                            name={`fileupload-${id}-${index}`}
+                            value={this.state.filename}
+                            required={required && !this.state.fileuploaded && !image}
                         />
                         <span className={classes.imageLabel}>{I18n.t.generic.upload}</span>
                         <img
@@ -79,14 +82,13 @@ class FieldUpload extends React.Component {
     }
 
     async onFileSelected (event) {
-        console.log('ok')
-        this.setState({ loading: true }, _ => console.log('done'));
+        this.setState({ loading: true });
         const formData = new FormData();
         formData.append("image", event.target.files[0]);
         const { url } = await Api.post(UPLOAD_PATH, formData, {
             headers: { 'Content-Type': 'multipart/form-data'}
         });
-        this.props.onImageUploaded(url, _ => this.setState({ loading: false }));
+        this.props.onImageUploaded(url, _ => this.setState({ loading: false, fileuploaded: true }));
     }
 };
 

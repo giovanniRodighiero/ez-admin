@@ -36,7 +36,7 @@ const SettingsMetaTags = ({
                 </Grid>
                 <Grid item md={9}>
                     <FieldUpload
-                        name="metaImage"
+                        id="metaImage"
                         image={meta.image}
                         onImageUploaded={onImageUploaded}
                     />
