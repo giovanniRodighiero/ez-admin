@@ -5,6 +5,7 @@ import GroupSection from './GroupSection';
 import FieldBlocks from './FieldBlocks';
 import FieldInput from './FieldInput';
 import FieldUpload from './FieldUpload';
+import Draggable from './Draggable';
 
 import I18n from '../config/I18n';
 
@@ -16,7 +17,8 @@ export default ({
     onServiceChange,
     onAddServiceItem,
     onRemoveServiceItem,
-    onChangeServiceItem
+    onChangeServiceItem,
+    onMoveServiceItem
 }) => (
         <GroupSection
             title={cardTitle}
@@ -46,47 +48,56 @@ export default ({
                     color: 'primary'
                 }]}
                 render={(block, index) => (
-                    <Grid container spacing={16} alignItems="center">
-                        <Grid item sm={12}>
-                            <FieldInput
-                                required
-                                id="service-title"
-                                label={I18n.t.homepage.services.itemsTitle}
-                                name="title"
-                                value={block.title}
-                                onChange={onChangeServiceItem(index)}
-                                type="text"
-                                margin="normal"
-                            />
-                        </Grid>
+                    <Draggable
+                        item
+                        sm={12}
+                        moveBlock={onMoveServiceItem}
+                        index={index}
+                    >
+                        <Grid container spacing={16} alignItems="center">
+                            <Grid item xs={12}>
+                                <FieldInput
+                                    required
+                                    id="service-title"
+                                    label={I18n.t.homepage.services.itemsTitle}
+                                    name="title"
+                                    value={block.title}
+                                    onChange={onChangeServiceItem(index)}
+                                    type="text"
+                                    margin="normal"
+                                />
+                            </Grid>
 
-                        <Grid item sm={12}>
-                            <FieldInput
-                                required
-                                id="service-description"
-                                label={I18n.t.homepage.services.itemsDescription}
-                                name="description"
-                                value={block.description}
-                                onChange={onChangeServiceItem(index)}
-                                type="text"
-                                margin="normal"
-                            />
-                        </Grid>
+                            <Grid item xs={12}>
+                                <FieldInput
+                                    required
+                                    id="service-description"
+                                    label={I18n.t.homepage.services.itemsDescription}
+                                    name="description"
+                                    value={block.description}
+                                    onChange={onChangeServiceItem(index)}
+                                    type="text"
+                                    margin="normal"
+                                />
+                            </Grid>
 
-                        <Grid item md={3}>
-                            <FormLabel>{I18n.t.homepage.services.itemsImage}</FormLabel>
+
+                            <Grid item md={3}>
+                                <FormLabel>{I18n.t.homepage.services.itemsImage}</FormLabel>
+                            </Grid>
+                            <Grid item md={9}>
+                                <FieldUpload
+                                    required
+                                    name="image"
+                                    id="itemsImage"
+                                    index={index}
+                                    image={block.image}
+                                    onImageUploaded={onImageUploaded(index)}
+                                />
+                            </Grid>
+
                         </Grid>
-                        <Grid item md={9}>
-                            <FieldUpload
-                                required
-                                name="image"
-                                id="itemsImage"
-                                index={index}
-                                image={block.image}
-                                onImageUploaded={onImageUploaded(index)}
-                            />
-                        </Grid>
-                    </Grid>
+                    </Draggable>
                 )}
             />
 

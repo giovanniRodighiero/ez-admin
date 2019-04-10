@@ -107,6 +107,12 @@ export default {
             itemsDescription: 'Descrizione del servizio',
             itemsImage: 'Immagine del servizio'
         },
+        cta: {
+            cardTitle: 'Sezione call to action',
+            cardSubtitle: 'Informazioni riguardanti la sezione servizi',
+            title: 'Titolo della sezione',
+            link: 'Url a cui indirizzare'
+        },
         notification: {
             success: 'Homepage aggiornata con successo'
         }

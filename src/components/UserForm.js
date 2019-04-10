@@ -17,7 +17,7 @@ export default ({
     errorCode,
     availableRoles = []
 }) => (
-    <GroupSection title={title}>
+    <GroupSection title={title} open>
         <form onSubmit={onSave}>
             <Grid container spacing={16}>
                 <Grid item md={6} sm={12}>

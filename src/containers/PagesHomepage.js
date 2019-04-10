@@ -5,6 +5,7 @@ import PageTitle from '../components/PageTitle';
 import FieldMetaTags from '../components/FieldMetaTags';
 import PagesHomepageHero from '../components/PagesHomepageHero';
 import PagesHomepageServices from '../components/PagesHomepageServices';
+import PagesHomepageCta from '../components/PagesHomepageCta';
 import FloatingButton from '../components/FloatingButton';
 
 import I18n from '../config/I18n';
@@ -18,7 +19,8 @@ class PagesHomepage extends React.Component {
     defaultService = {
         title: '',
         description: '',
-        image: ''
+        image: '',
+        position: 0
     };
 
     state = {
@@ -45,6 +47,10 @@ class PagesHomepage extends React.Component {
         services: {
             title: '',
             items: []
+        },
+        cta: {
+            title: '',
+            link: ''
         }
     }
 
@@ -57,6 +63,7 @@ class PagesHomepage extends React.Component {
         this.onRemoveServiceItem = this.onRemoveServiceItem.bind(this);
         this.onImageUploadedServiceItem = this.onImageUploadedServiceItem.bind(this);
         this.onChangeServiceItem = this.onChangeServiceItem.bind(this);
+        this.onMoveServiceItem = this.onMoveServiceItem.bind(this);
         this.onSave = this.onSave.bind(this);
     }
 
@@ -74,7 +81,7 @@ class PagesHomepage extends React.Component {
     }
 
     render () {
-        const { meta, hero, services } = this.state;
+        const { meta, hero, services, cta } = this.state;
         return (
             <form onSubmit={this.onSave} autoComplete="off">
                 <input type="hidden" autoComplete="false" />
@@ -100,6 +107,12 @@ class PagesHomepage extends React.Component {
                     onRemoveServiceItem={this.onRemoveServiceItem}
                     onImageUploaded={this.onImageUploadedServiceItem}
                     onChangeServiceItem={this.onChangeServiceItem}
+                    onMoveServiceItem={this.onMoveServiceItem}
+                />
+
+                <PagesHomepageCta
+                    cta={cta}
+                    onCtaChange={this.onFieldChange('cta')}
                 />
 
                 <FloatingButton type="submit">
@@ -158,6 +171,15 @@ class PagesHomepage extends React.Component {
                 return { services: { ...prevState.services, items } };
             });
         }
+    }
+
+    onMoveServiceItem (dragIndex, hoverIndex) {
+        this.setState(prevState => {
+            const items = [ ...prevState.services.items ];
+            items[dragIndex].position = hoverIndex;
+            items[hoverIndex].position = dragIndex;
+            return { services: { ...prevState.services, items } };
+        });
     }
 
     /****************  FORM SAVE  ****************/
