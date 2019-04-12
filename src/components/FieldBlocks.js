@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, Button, withStyles, IconButton } from '@material-ui/core';
 import { MdAdd, MdDelete } from 'react-icons/md';
-import { DragDropContextProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend'; 
+
+import Draggable from './FieldBlockDraggableContext';
 
 const styles = theme => ({
     buttonsContainer: {
@@ -36,20 +36,19 @@ const FieldBlock = ({
     <React.Fragment>
 
         <Grid item xs={12}>
-            
-        <DragDropContextProvider backend={HTML5Backend}>
-            { blocks.sort((a, b) => a.position - b.position).map((block, i) => (
-                <div className={classes.blockContainer} key={i}>
-                    
-                    { render(block, i) }
+            <Draggable>
+                { blocks.sort((a, b) => a.position - b.position).map((block, i) => (
+                    <div className={classes.blockContainer} key={i}>
+                        
+                        { render(block, i) }
 
-                    <IconButton type="button" className={classes.deleteIcon} onClick={onRemoveBlock(i)}>
-                        <MdDelete color="red" />
-                    </IconButton>
+                        <IconButton type="button" className={classes.deleteIcon} onClick={onRemoveBlock(i)}>
+                            <MdDelete color="red" />
+                        </IconButton>
 
-                </div>
-            ))}
-            </DragDropContextProvider>
+                    </div>
+                ))}
+            </Draggable>
         </Grid>
 
         <Grid item xs={12} className={classes.buttonsContainer}>

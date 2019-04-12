@@ -20,7 +20,7 @@ class PagesHomepage extends React.Component {
         title: '',
         description: '',
         image: '',
-        position: 0
+        position: -1
     };
 
     state = {
@@ -87,33 +87,33 @@ class PagesHomepage extends React.Component {
                 <input type="hidden" autoComplete="false" />
                 <PageTitle>{I18n.t.homepage.pageTitle}</PageTitle>
 
-                <FieldMetaTags
-                    cardSubtitle={I18n.t.homepage.metaTagsDescription}
-                    meta={meta}
-                    onMetaChange={this.onFieldChange('meta')}
-                    onImageUploaded={this.onImageUploaded({ prefix: 'meta' })}
-                />
+                    <FieldMetaTags
+                        cardSubtitle={I18n.t.homepage.metaTagsDescription}
+                        meta={meta}
+                        onMetaChange={this.onFieldChange('meta')}
+                        onImageUploaded={this.onImageUploaded({ prefix: 'meta' })}
+                    />
 
-                <PagesHomepageHero
-                    hero={hero}
-                    onImageUploaded={this.onImageUploaded}
-                    onHeroChange={this.onFieldChange('hero')}
-                />
+                    <PagesHomepageHero
+                        hero={hero}
+                        onImageUploaded={this.onImageUploaded}
+                        onHeroChange={this.onFieldChange('hero')}
+                    />
 
-                <PagesHomepageServices
-                    services={services}
-                    onServiceChange={this.onFieldChange('services')}
-                    onAddServiceItem={this.onAddServiceItem}
-                    onRemoveServiceItem={this.onRemoveServiceItem}
-                    onImageUploaded={this.onImageUploadedServiceItem}
-                    onChangeServiceItem={this.onChangeServiceItem}
-                    onMoveServiceItem={this.onMoveServiceItem}
-                />
+                    <PagesHomepageServices
+                        services={services}
+                        onServiceChange={this.onFieldChange('services')}
+                        onAddServiceItem={this.onAddServiceItem}
+                        onRemoveServiceItem={this.onRemoveServiceItem}
+                        onImageUploaded={this.onImageUploadedServiceItem}
+                        onChangeServiceItem={this.onChangeServiceItem}
+                        onMoveServiceItem={this.onMoveServiceItem}
+                    />
 
-                <PagesHomepageCta
-                    cta={cta}
-                    onCtaChange={this.onFieldChange('cta')}
-                />
+                    <PagesHomepageCta
+                        cta={cta}
+                        onCtaChange={this.onFieldChange('cta')}
+                    />
 
                 <FloatingButton type="submit">
                     <MdSave size="28px" />
