@@ -1,5 +1,7 @@
 import React from 'react';
 import { MdSave } from 'react-icons/md';
+import { EditorState, ContentState, convertToRaw, convertFromHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 import PageTitle from '../components/PageTitle';
 import FieldMetaTags from '../components/FieldMetaTags';
@@ -38,11 +40,9 @@ class PagesHomepage extends React.Component {
             twitterDescription: '',
         },
         hero: {
-            imageDesktop: '',
-            imageMobile: '',
             title: '',
             subtitle: '',
-            description: ''
+            description: EditorState.createEmpty()
         },
         services: {
             title: '',
@@ -59,6 +59,7 @@ class PagesHomepage extends React.Component {
 
         this.onImageUploaded = this.onImageUploaded.bind(this);
         this.onFieldChange = this.onFieldChange.bind(this);
+        this.onRichEditorUpdate = this.onRichEditorUpdate.bind(this);
         this.onAddServiceItem = this.onAddServiceItem.bind(this);
         this.onRemoveServiceItem = this.onRemoveServiceItem.bind(this);
         this.onImageUploadedServiceItem = this.onImageUploadedServiceItem.bind(this);
@@ -70,7 +71,7 @@ class PagesHomepage extends React.Component {
     async componentDidMount () {
         try {
             const homepage = await Api.get(HOMEPAGE_PATH);
-            this.setState(homepage);
+            this.setState(this.setupRichEditors(homepage));
         } catch (error) {
             console.log(error);
             this.context.setNotification({
@@ -98,9 +99,10 @@ class PagesHomepage extends React.Component {
                         hero={hero}
                         onImageUploaded={this.onImageUploaded}
                         onHeroChange={this.onFieldChange('hero')}
+                        onRichEditorUpdate={this.onRichEditorUpdate}
                     />
 
-                    <PagesHomepageServices
+                    {/* <PagesHomepageServices
                         services={services}
                         onServiceChange={this.onFieldChange('services')}
                         onAddServiceItem={this.onAddServiceItem}
@@ -113,13 +115,28 @@ class PagesHomepage extends React.Component {
                     <PagesHomepageCta
                         cta={cta}
                         onCtaChange={this.onFieldChange('cta')}
-                    />
+                    /> */}
 
                 <FloatingButton type="submit">
                     <MdSave size="28px" />
                 </FloatingButton>
             </form>
         )
+    }
+
+    setupRichEditors (homepage) {
+        const descriptionBlocksFromHtml = convertFromHTML(homepage.hero.description);
+        homepage.hero.description = EditorState.createWithContent(ContentState.createFromBlockArray(
+            descriptionBlocksFromHtml.contentBlocks,
+            descriptionBlocksFromHtml.entityMap
+        ));
+        return homepage;
+    }
+
+    onRichEditorUpdate ({ prefix, fieldName = 'description' }) {
+        return editorState => this.setState(prevState => (
+            { [prefix]: { ...prevState[prefix], [fieldName]: editorState }
+        }));
     }
 
     onFieldChange (prefix) {
@@ -188,8 +205,10 @@ class PagesHomepage extends React.Component {
         
         try {
             event.preventDefault();
-            const homepage = await Api.put(HOMEPAGE_PATH, this.state);
-            this.setState(homepage);
+            const payload = { ...this.state };
+            payload.hero.description = draftToHtml(convertToRaw(this.state.hero.description.getCurrentContent()));
+            const homepage = await Api.put(HOMEPAGE_PATH, payload);
+            this.setState(this.setupRichEditors(homepage));
             this.context.setNotification({
                 notificationType: 'success',
                 notificationMessage: I18n.t.homepage.notification.success

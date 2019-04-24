@@ -4,6 +4,7 @@ import { Grid, FormLabel } from '@material-ui/core';
 import GroupSection from './GroupSection';
 import FieldUpload from './FieldUpload';
 import FieldInput from './FieldInput';
+import FieldWysiwyg from './FieldWysiwyg';
 
 import I18n from '../config/I18n';
 
@@ -12,7 +13,8 @@ export default ({
     cardSubtitle = I18n.t.homepage.hero.cardSubtitle,
     onImageUploaded,
     hero = {},
-    onHeroChange
+    onHeroChange,
+    onRichEditorUpdate
 }) => (
     <GroupSection
         title={cardTitle}
@@ -66,7 +68,11 @@ export default ({
                 />
             </Grid>
             <Grid item md={12} sm={12}>
-                <FieldInput
+                <FieldWysiwyg
+                    value={hero.description}
+                    onChange={onRichEditorUpdate({ prefix: 'hero', fieldName: 'description' })}
+                />
+                {/* <FieldInput
                     required
                     multiline
                     id="description"
@@ -76,7 +82,7 @@ export default ({
                     onChange={onHeroChange}
                     type="text"
                     margin="normal"
-                />
+                /> */}
             </Grid>
 
         </Grid>
