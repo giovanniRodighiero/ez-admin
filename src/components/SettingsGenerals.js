@@ -13,7 +13,7 @@ export default ({
     <GroupSection
         title={I18n.t.settings.generic}
     >
-        <Grid container spacing={16}>
+        <Grid container>
             <Grid item md={6} sm={12}>
                 <FieldInput
                     select

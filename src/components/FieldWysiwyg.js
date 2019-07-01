@@ -6,6 +6,12 @@ const FieldWysiwyg = ({ onChange, value }) => (
     <Editor
         editorState={value}
         onEditorStateChange={onChange}
+        wrapperStyle={{
+            marginTop: '10px'
+        }}
+        editorStyle={{
+            padding: '0 10px'
+        }}
     />
 );
 

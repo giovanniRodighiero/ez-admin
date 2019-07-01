@@ -102,7 +102,7 @@ class PagesHomepage extends React.Component {
                         onRichEditorUpdate={this.onRichEditorUpdate}
                     />
 
-                    {/* <PagesHomepageServices
+                    <PagesHomepageServices
                         services={services}
                         onServiceChange={this.onFieldChange('services')}
                         onAddServiceItem={this.onAddServiceItem}
@@ -115,7 +115,7 @@ class PagesHomepage extends React.Component {
                     <PagesHomepageCta
                         cta={cta}
                         onCtaChange={this.onFieldChange('cta')}
-                    /> */}
+                    />
 
                 <FloatingButton type="submit">
                     <MdSave size="28px" />

@@ -30,7 +30,7 @@ const SettingsMetaTags = ({
             title={cardTitle}
             subtitle={cardSubtitle}
         >
-            <Grid container spacing={16} alignItems="center">
+            <Grid container alignItems="center" spacing={2}>
                 <Grid item md={3}>
                     <FormLabel>{I18n.t.settings.image}</FormLabel>
                 </Grid>
@@ -70,7 +70,7 @@ const SettingsMetaTags = ({
                 </Grid>
             </Grid>
 
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
                 <Grid item md={6} sm={12}>
                     <FieldInput
                         required
@@ -97,7 +97,7 @@ const SettingsMetaTags = ({
                 </Grid>
             </Grid>
 
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
                 <Grid item md={6} sm={12}>
                     <FieldInput
                         required
@@ -124,7 +124,7 @@ const SettingsMetaTags = ({
                 </Grid>
             </Grid>
 
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
                 <Grid item md={6} sm={12}>
                     <FieldInput
                         required

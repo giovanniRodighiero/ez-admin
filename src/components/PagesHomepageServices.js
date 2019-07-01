@@ -54,7 +54,7 @@ export default ({
                         moveBlock={onMoveServiceItem}
                         index={index}
                     >
-                        <Grid container spacing={16} alignItems="center">
+                        <Grid container alignItems="center">
                             <Grid item xs={12}>
                                 <FieldInput
                                     required
@@ -65,6 +65,7 @@ export default ({
                                     onChange={onChangeServiceItem(index)}
                                     type="text"
                                     margin="normal"
+                                    multiline
                                 />
                             </Grid>
 
@@ -78,6 +79,7 @@ export default ({
                                     onChange={onChangeServiceItem(index)}
                                     type="text"
                                     margin="normal"
+                                    multiline
                                 />
                             </Grid>
 

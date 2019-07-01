@@ -1,43 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import NavigationSideBar from './NavBar';
 import NavigationTopBar from './TopBar';
 
-class Navigation extends React.Component {
+function Navigation (props) {
 
-    state = {
-        open: false
-    }
+    const [ open, setOpen ] = useState(false);
 
-    constructor (props) {
-        super(props);
-
-        this.onOpen = this.onOpen.bind(this);
-        this.onClose = this.onClose.bind(this);
-    }
-
-    render () {
-        return (
-            <React.Fragment>
-                <NavigationTopBar
-                    email={this.props.user.email}
-                    onOpen={this.onOpen}
-                />
-                <NavigationSideBar
-                    open={this.state.open}
-                    onClose={this.onClose}
-                />
-            </React.Fragment>
-        )
-    }
-
-    onClose () {
-        this.setState({ open: false });
-    }
-
-    onOpen () {
-        this.setState({ open: true });
-    }
+    return (
+        <React.Fragment>
+            <NavigationTopBar
+                email={props.user.email}
+                onOpen={_ => setOpen(true)}
+            />
+            <NavigationSideBar
+                open={open}
+                onClose={_ => setOpen(false)}
+            />
+        </React.Fragment>
+    )
 };
 
 export default Navigation;

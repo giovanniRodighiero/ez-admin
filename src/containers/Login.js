@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { CardContent, CardActions } from '@material-ui/core';
 import { Typography, Button } from '@material-ui/core';
 
@@ -22,90 +22,65 @@ const styles = {
     }
 };
 
+function Login (props) {
 
-class Login extends React.Component {
+    const [ credentials, setCredentials ] = useState({ email: '', password: '' });
+    const [ error, setError ] = useState(false);
 
-    state = {
-        email: '',
-        password: '',
-        error: false
-    }
+    const context = useContext(GlobalContext);
 
-    constructor (props) {
-        super(props);
+    useEffect(_ => {
+        if (context.hasAccessToken())
+            props.history.push('/');
+    });
 
-        this.onEmailChange = this.onEmailChange.bind(this);
-        this.onPasswordChange = this.onPasswordChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-    }
+    const onEmailChange = e => setCredentials({ ...credentials, email: e.target.value });
+    const onPasswordChange = e => setCredentials({ ...credentials, password: e.target.value });
 
-    componentDidUpdate () {
-        if (this.context.hasAccessToken()) {
-            this.props.history.push('/');
-        }
-    }
-    
-    componentDidMount () {
-        if (this.context.hasAccessToken()) {
-            this.props.history.push('/');
-        }
-    }
-
-    render () {
-        return (
-            <Card>
-                <form onSubmit={this.onSubmit}>
-                    <CardContent style={styles.cardContent}>
-                        <div style={styles.cardBox}>
-                            <Typography
-                                component="h1"
-                                variant="h3"
-                                gutterBottom
-                            >{I18n.t.loginPage.title}</Typography>
-                            <Typography variant="subtitle1">{I18n.t.loginPage.subtitle}</Typography>
-                        </div>
-                        <div style={styles.cardBox}>
-                            <LoginCardBoxForm
-                                {...this.state}
-                                onEmailChange={this.onEmailChange}
-                                onPasswordChange={this.onPasswordChange}
-                                onSubmit={this.onSubmit}
-                            />
-                        </div>
-                    </CardContent>
-                    <CardActions style={styles.cardActions}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                        >{I18n.t.loginPage.button}</Button>
-                    </CardActions>
-                </form>
-            </Card>
-        );
-    }
-
-    onEmailChange (event) {
-        this.setState({ email: event.target.value, error: false });
-    }
-
-    onPasswordChange (event) {
-        this.setState({ password: event.target.value, error: false });
-    }
-
-    async onSubmit (event) {
-        event.preventDefault();
-        this.setState({ error: false });
+    const onSubmit = async e => {
+        e.preventDefault();
+        setError(false);
 
         try {
-            const result = await Api.login({ email: this.state.email, password: this.state.password });
-            this.context.login(result);
+            const result = await Api.login(credentials);
+            context.login(result);
         } catch ({ response }) {
-            this.setState({ error: response.data.code });
+            setError(response.data.code);
         }
     }
-};
 
-Login.contextType = GlobalContext;
+    return (
+        <Card>
+            <form onSubmit={onSubmit}>
+                <CardContent style={styles.cardContent}>
+                    <div style={styles.cardBox}>
+                        <Typography
+                            component="h1"
+                            variant="h3"
+                            gutterBottom
+                        >{I18n.t.loginPage.title}</Typography>
+                        <Typography variant="subtitle1">{I18n.t.loginPage.subtitle}</Typography>
+                    </div>
+                    <div style={styles.cardBox}>
+                        <LoginCardBoxForm
+                            {...credentials }
+                            error={error}
+                            onEmailChange={onEmailChange}
+                            onPasswordChange={onPasswordChange}
+                            onSubmit={onSubmit}
+                        />
+                    </div>
+                </CardContent>
+                <CardActions style={styles.cardActions}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                    >{I18n.t.loginPage.button}</Button>
+                </CardActions>
+            </form>
+        </Card>
+    )
+};
 
 export default Login;

@@ -12,7 +12,7 @@ export default ({
     classes,
     onConfirmDialogOpen,
 
-    users = [],
+    data: users,
     currentPage,
     totalCount,
     perPage,
@@ -25,7 +25,7 @@ export default ({
     onSortChange
 }) => (
     <Grid item xs={12}>
-        <Table padding="dense">
+        <Table padding="default">
             <TableHead>
                 <TableRow>
                     <TableCell width="35%" className={classes.head}>

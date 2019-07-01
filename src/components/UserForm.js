@@ -19,7 +19,7 @@ export default ({
 }) => (
     <GroupSection title={title} open>
         <form onSubmit={onSave}>
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
                 <Grid item md={6} sm={12}>
                     <FieldInput
                         required

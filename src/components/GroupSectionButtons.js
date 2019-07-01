@@ -1,7 +1,8 @@
 import React from 'react';
-import { Grid, withStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
     wrapper: {
         display: 'flex',
         width: '100%',
@@ -9,12 +10,16 @@ const styles = theme => ({
         justifyContent: 'flex-end',
         margin: '15px 0'
     }
-});
+}));
 
-const GroupSectionButtons = ({ children, classes }) => (
-    <Grid item xs={12}>
-        <div className={classes.wrapper}>{children}</div>
-    </Grid>
-);
+const GroupSectionButtons = ({ children }) => {
+    const classes = useStyles();
 
-export default withStyles(styles)(GroupSectionButtons);
+    return (
+        <Grid item xs={12}>
+            <div className={classes.wrapper}>{children}</div>
+        </Grid>
+    );
+}
+
+export default GroupSectionButtons;

@@ -1,13 +1,14 @@
-import React from 'react';
-import { FormLabel, withStyles } from '@material-ui/core';
+import React, { useState } from 'react';
+import { FormLabel } from '@material-ui/core';
 import { MdFileUpload } from 'react-icons/md';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Api from '../Api';
 import I18n from '../config/I18n';
 
 const UPLOAD_PATH = '/api/v1/uploader';
 
-const styles = {
+const useStyles = makeStyles(theme => ({
     imageContainer: {
         display: 'block',
         width: '100%',
@@ -37,60 +38,54 @@ const styles = {
         color: 'black',
         transition: 'opacity .25s ease-out'
     }
-};
 
-class FieldUpload extends React.Component {
+}));
 
-    state = {
-        loading: false,
-        fileuploaded: false
-    }
+function FieldUpload ({ image, id, index = 0, required = false, filename, onImageUploaded }) {
 
-    constructor (props) {
-        super(props);
+    const [ loading, setLoading ] = useState(false);
+    const [ fileuploaded, setFileuploaded ] = useState(false);
+    const classes = useStyles();
 
-        this.onFileSelected = this.onFileSelected.bind(this);
-    }
-
-    render () {
-        const { classes, image, id, index = 0, required = false } = this.props;
-
-        return (
-            <FormLabel htmlFor={`fileupload-${id}-${index}`} className={classes.imageContainer}>
-                { this.state.loading && <MdFileUpload size="30px" /> }
-                { !this.state.loading && (
-                    <React.Fragment>
-                        <input
-                            accept="image/*"
-                            style={{ opacity: '0' }}
-                            id={`fileupload-${id}-${index}`}
-                            onChange={this.onFileSelected}
-                            type="file"
-                            name={`fileupload-${id}-${index}`}
-                            value={this.state.filename}
-                            required={required && !this.state.fileuploaded && !image}
-                        />
-                        <span className={classes.imageLabel}>{I18n.t.generic.upload}</span>
-                        <img
-                            src={image || '/placeholder-img.png'}
-                            className={classes.image}
-                            alt={id}
-                        />
-                    </React.Fragment>
-                )}
-            </FormLabel>
-        );
-    }
-
-    async onFileSelected (event) {
-        this.setState({ loading: true });
+    async function onFileSelected (event) {
+        setLoading(true);
         const formData = new FormData();
         formData.append("image", event.target.files[0]);
         const { url } = await Api.post(UPLOAD_PATH, formData, {
-            headers: { 'Content-Type': 'multipart/form-data'}
+            headers: { 'Content-Type': 'multipart/form-data' }
         });
-        this.props.onImageUploaded(url, _ => this.setState({ loading: false, fileuploaded: true }));
+        onImageUploaded(url, _ => {
+            setLoading(false);
+            setFileuploaded(true);
+        });
     }
-};
 
-export default withStyles(styles)(FieldUpload);
+    return (
+        <FormLabel htmlFor={`fileupload-${id}-${index}`} className={classes.imageContainer}>
+            { loading && <MdFileUpload size="30px" /> }
+            { !loading && (
+                <React.Fragment>
+                    <input
+                        accept="image/*"
+                        style={{ opacity: '0' }}
+                        id={`fileupload-${id}-${index}`}
+                        onChange={onFileSelected}
+                        type="file"
+                        name={`fileupload-${id}-${index}`}
+                        value={filename}
+                        required={required && !fileuploaded && !image}
+                    />
+                    <span className={classes.imageLabel}>{I18n.t.generic.upload}</span>
+                    <img
+                        src={image || '/placeholder-img.png'}
+                        className={classes.image}
+                        alt={id}
+                    />
+                </React.Fragment>
+            )}
+        </FormLabel>
+    );
+
+}
+
+export default FieldUpload;

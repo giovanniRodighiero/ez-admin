@@ -1,8 +1,7 @@
 import React from 'react';
-import { Grid, FormLabel } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import GroupSection from './GroupSection';
-import FieldUpload from './FieldUpload';
 import FieldInput from './FieldInput';
 
 import I18n from '../config/I18n';
@@ -17,7 +16,7 @@ export default ({
         title={cardTitle}
         subtitle={cardSubtitle}
     >
-        <Grid container spacing={16}>
+        <Grid container>
 
             <Grid item md={12} sm={12}>
                 <FieldInput

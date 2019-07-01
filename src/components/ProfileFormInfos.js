@@ -15,7 +15,7 @@ export default ({
 }) => (
     <GroupSection title={I18n.t.profile.personalData}>
         <form onSubmit={onProfileSave}>
-            <Grid container spacing={16}>
+            <Grid container>
                 <Grid item sm={6}>
                     <FieldInput
                         required

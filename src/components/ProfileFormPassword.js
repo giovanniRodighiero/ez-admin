@@ -16,7 +16,7 @@ export default ({
 }) => (
     <GroupSection title={I18n.t.profile.updatePassword}>
         <form onSubmit={onPasswordSave}>
-            <Grid container spacing={16}>
+            <Grid container>
                 <Grid item sm={6}>
                     <FieldInput
                         required

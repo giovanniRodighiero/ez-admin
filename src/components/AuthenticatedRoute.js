@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import GlobalContext from './GlobalContext';
@@ -6,42 +6,38 @@ import GlobalContext from './GlobalContext';
 import Api from '../Api';
 
 function AuthenticatedRoute (Component) {
-    class WithUserProfile extends React.Component {
 
-        state = {
-            error: false
-        }
+    function useUserProfile (props) {
+        const [ error, setError ] = useState(false);
+        const context = useContext(GlobalContext);
 
-        async componentDidMount () {
-            if (!this.context.hasAccessToken()) return;
 
-            if (this.context.user.fetched) return;
-
-            try {
-                const result = await Api.getUserProfile();
-                this.context.setUser(result);
-            } catch (error) {
-                console.log(error);
+        useEffect(_ => {
+            async function fetchProfile () {
+                if (context.hasAccessToken() && !context.user.fetched) {
+                    try {
+                        const result = await Api.getUserProfile();
+                        context.setUser(result);
+                    } catch (error) {
+                        console.log(error);
+                        setError(error);
+                    }
+                }
             }
-        }
 
-        render () {
-            if (!this.context.hasAccessToken())
-                return <Route {...this.props} render={props => <Redirect to="/login" />} />;
+            fetchProfile();
+        }, [context]);
 
-            const { error } = this.state;
-            const { user } = this.context;
+        if (!context.hasAccessToken())
+            return <Route {...props} render={props => <Redirect to="/login" />} />;
 
-            if (error) return <Redirect to="/login" />;
-            if (!user.fetched) return <p>loading</p>;
-            if (user.fetched) return <Route {...this.props} component={Component} />;
-        }
+        if (error) return <Redirect to="/login" />;
+        if (!context.user.fetched) return <p>loading</p>;
+        if (context.user.fetched) return <Route {...props} component={Component} />; 
     }
 
-    WithUserProfile.contextType = GlobalContext;
+    return useUserProfile;
 
-    return WithUserProfile;
-}
-
+};
 
 export default AuthenticatedRoute;

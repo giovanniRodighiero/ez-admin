@@ -20,7 +20,7 @@ export default ({
         title={cardTitle}
         subtitle={cardSubtitle}
     >
-        <Grid container spacing={16} alignItems="center">
+        <Grid container alignItems="center">
             <Grid item md={3}>
                 <FormLabel>{I18n.t.homepage.hero.imageDesktop}</FormLabel>
             </Grid>

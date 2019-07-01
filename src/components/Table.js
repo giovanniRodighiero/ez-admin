@@ -1,18 +1,24 @@
 import React from 'react';
-import { TableCell as DefaultTableCell, withStyles } from '@material-ui/core';
+import { TableCell as DefaultTableCell } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
     tableCell: {
-        padding: '0 5px'
+        padding: '0 20px'
+    },
+    head: {
+        padding: '5px',
     }
-})
+}));
 
-const TableCellComp = ({ classes, children, width, ...props }) => (
-    <DefaultTableCell
-        classes={{ paddingDense: classes.tableCell }}
-        style={{ width }}
-        {...props}
-    >{ children }</DefaultTableCell>
-);
+export const TableCell = ({ children, width, ...props }) => {
+    const classes = useStyles();
 
-export const TableCell = withStyles(styles)(TableCellComp);
+    return (
+        <DefaultTableCell
+            classes={{ root: classes.tableCell, head: classes.head }}
+            style={{ width }}
+            {...props}
+        >{ children }</DefaultTableCell>
+    );
+};
