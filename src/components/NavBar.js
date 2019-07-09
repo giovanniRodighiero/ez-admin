@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Hidden, ListSubheader } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { MdPeople, MdSettings, MdHome } from 'react-icons/md';
+import { MdPeople, MdSettings } from 'react-icons/md';
 
 import I18n from '../config/I18n';
 
@@ -27,16 +27,6 @@ const Component = ({ classes, open, onClose, variant }) => (
         open={open}
         onClose={onClose}
     >
-        <List
-            component="nav"
-            subheader={<LinkTitle classes={classes} text={I18n.t.navBar.pages} />}
-        >
-            <ListItem button component={Link} to="/pages/homepage" onClick={onClose}>
-                <ListItemIcon><MdHome size="1.5em" /></ListItemIcon>
-                <ListItemText>{I18n.t.navBar.pagesHomepage}</ListItemText>
-            </ListItem>
-        </List>
-
         <List
             component="nav"
             subheader={<LinkTitle classes={classes} text={I18n.t.navBar.admin} />}

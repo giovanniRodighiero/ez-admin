@@ -2,7 +2,6 @@ import React from 'react';
 import { MdSave } from 'react-icons/md';
 
 import PageTitle from '../components/PageTitle';
-import FieldMetaTags from '../components/FieldMetaTags';
 import FloatingButton from '../components/FloatingButton';
 
 import I18n from '../config/I18n';
@@ -32,8 +31,6 @@ class Settings extends React.Component {
     constructor (props) {
         super(props);
 
-        this.onMetaChange = this.onMetaChange.bind(this);
-        this.onImageUploaded = this.onImageUploaded.bind(this);
         this.onSave = this.onSave.bind(this);
     }
 
@@ -55,26 +52,11 @@ class Settings extends React.Component {
             <form style={{ width: '100%' }} onSubmit={this.onSave}>
                 <PageTitle>{I18n.t.settings.pageTitle}</PageTitle>
 
-                <FieldMetaTags
-                    meta={this.state.meta}
-                    onMetaChange={this.onMetaChange}
-                    onImageUploaded={this.onImageUploaded}
-                />
-
                 <FloatingButton type="submit">
                     <MdSave size="28px" />
                 </FloatingButton>
             </form>
         );
-    }
-
-    onMetaChange (event) {
-        const { name, value } = event.target;
-        this.setState(prevState => ({ meta: { ...prevState.meta, [name]: value } }));
-    }
-
-    onImageUploaded (image, done) {
-        this.setState(prevState => ({ meta: { ...prevState.meta, image } }), done);
     }
 
     async onSave (event) {
