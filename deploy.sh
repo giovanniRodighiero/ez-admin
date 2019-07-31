@@ -1,0 +1,1 @@
+rsync -a --delete ./build/ user@host:/path/to/folder
