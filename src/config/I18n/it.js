@@ -2,7 +2,9 @@ export default {
     generic: {
         error: 'Si è verificato un errore',
         upload: 'Seleziona nuova immagine',
-        savedSuccessfully: 'Salvato correttamente'
+        savedSuccessfully: 'Salvato correttamente',
+        it: 'Italiano',
+        en: 'English'
     },
 
     topBar: {

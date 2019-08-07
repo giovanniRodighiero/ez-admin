@@ -10,3 +10,5 @@ export const api = {
 export const auth = {
     localStorageKey: 'admin-token'
 }
+
+export const availableLangs = ['it', 'en'];

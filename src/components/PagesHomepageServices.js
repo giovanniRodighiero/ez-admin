@@ -62,7 +62,7 @@ export default ({
                                     label={I18n.t.homepage.services.itemsTitle}
                                     name="title"
                                     value={block.title}
-                                    onChange={onChangeServiceItem(index)}
+                                    onChange={onChangeServiceItem({ index })}
                                     type="text"
                                     margin="normal"
                                     multiline
@@ -76,7 +76,7 @@ export default ({
                                     label={I18n.t.homepage.services.itemsDescription}
                                     name="description"
                                     value={block.description}
-                                    onChange={onChangeServiceItem(index)}
+                                    onChange={onChangeServiceItem({ index })}
                                     type="text"
                                     margin="normal"
                                     multiline
@@ -94,7 +94,7 @@ export default ({
                                     id="itemsImage"
                                     index={index}
                                     image={block.image}
-                                    onImageUploaded={onImageUploaded(index)}
+                                    onImageUploaded={onImageUploaded({ index })}
                                 />
                             </Grid>
 

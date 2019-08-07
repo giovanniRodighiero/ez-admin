@@ -26,7 +26,7 @@ export default ({
             </Grid>
             <Grid item md={9}>
                 <FieldUpload
-                    name="heroImageDesktop"
+                    name="imageDesktop"
                     image={hero.imageDesktop}
                     onImageUploaded={onImageUploaded({ prefix: 'hero', fieldName: 'imageDesktop' })}
                 />
@@ -37,9 +37,9 @@ export default ({
             </Grid>
             <Grid item md={9}>
                 <FieldUpload
-                    name="heroImageDesktop"
+                    name="imageMobile"
                     image={hero.imageMobile}
-                    onImageUploaded={onImageUploaded({ prefix: 'hero', fieldName: 'imageMobile' })}
+                    onImageUploaded={onImageUploaded({ prefix: 'hero', fieldName: 'imageMobile'})}
                 />
             </Grid>
 
@@ -70,7 +70,7 @@ export default ({
             <Grid item md={12} sm={12}>
                 <FieldWysiwyg
                     value={hero.description}
-                    onChange={onRichEditorUpdate({ prefix: 'hero', fieldName: 'description' })}
+                    onChange={onRichEditorUpdate({ prefix: 'hero', fieldName: 'description'})}
                 />
                 {/* <FieldInput
                     required
